@@ -4,7 +4,7 @@ const initialState = {
   },
 }
 
-export default (state = initialState, action) => {
+const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'INCREMENT':
       return { ...state }
@@ -13,4 +13,8 @@ export default (state = initialState, action) => {
     default:
       return state
   }
+}
+
+export default {
+  user: userReducer
 }
