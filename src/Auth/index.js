@@ -1,7 +1,14 @@
 import auth0 from 'auth0-js'
 import history from '../history/'
 
-const {REACT_APP_DOMAIN, REACT_APP_CLIENT_ID, REACT_APP_REDIRECT_URI, REACT_APP_AUDIENCE, REACT_APP_RESPONSE_TYPE, REACT_APP_SCOPE} = process.env
+const {
+  REACT_APP_DOMAIN,
+  REACT_APP_CLIENT_ID,
+  REACT_APP_REDIRECT_URI,
+  REACT_APP_AUDIENCE,
+  REACT_APP_RESPONSE_TYPE,
+  REACT_APP_SCOPE,
+} = process.env
 
 export default class Auth {
   auth0 = new auth0.WebAuth({
