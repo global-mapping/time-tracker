@@ -1,5 +1,19 @@
-import React from 'react'
+import React, {Component} from 'react'
 
-const TimeTracker = () => <div>you can view this page only f you are logged in</div>
+class TimeTracker extends Component {
+  logout = e => {
+    e.preventDefault()
+    this.props.auth.logout()
+  }
+
+  render () {
+    return (
+      <div className="flex-column flex-center">
+        <span>you can view this page only if you are logged in</span>
+        <a onClick={this.logout}>Log out</a>
+      </div>
+    )
+  }
+}
 
 export default TimeTracker
