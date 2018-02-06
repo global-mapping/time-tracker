@@ -1,12 +1,23 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 
 class Day extends Component {
-  render () {
-    const {date} = this.props
+  state = {
+    message: '',
+  }
+
+  handleChangeMessage = e => {
+    e.preventDefault()
+    this.setState({ message: e.value })
+  }
+
+  render() {
+    const { date, isToday } = this.props
+    const { message } = this.state
+
     return (
-      <div style={{borderColor: '#E74C3C', borderWidth: '1px', borderStyle: 'solid', marginBottom: '5px'}}>
-        <span>Single Day</span>
-        <div>{date}</div>
+      <div className={`day ${isToday ? 'today' : ''}`}>
+        <div className="flex-row flex-center">{date}</div>
+        <textarea className="message" value={message} onChange={this.handleChangeMessage} />
       </div>
     )
   }

@@ -36,7 +36,7 @@ export default class Auth {
     })
   }
 
-  setSession = (authResult) => {
+  setSession = authResult => {
     let expiresAt = JSON.stringify(authResult.expiresIn * 1000 + new Date().getTime())
     localStorage.setItem('access_token', authResult.accessToken)
     localStorage.setItem('id_token', authResult.idToken)
@@ -54,7 +54,7 @@ export default class Auth {
   isAuthenticated = () => {
     const accessToken = localStorage.getItem('access_token')
     if (accessToken) {
-      this.auth0.client.userInfo(accessToken,  (err, {email}) => {
+      this.auth0.client.userInfo(accessToken, (err, { email }) => {
         if (err) {
           console.error(err)
           return false

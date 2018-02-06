@@ -18,8 +18,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div>home page</div>
-        <a onClick={this.login}>Login</a>
+        <div>Global Mapping Time Tracker</div>
+        <div className='button -green center' onClick={this.login}>Iniciar Sesión</div>
       </div>
     )
   }
