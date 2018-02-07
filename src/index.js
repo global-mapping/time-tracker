@@ -7,6 +7,7 @@ import TimeTracker from './components/TimeTracker'
 import registerServiceWorker from './registerServiceWorker'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import reducers from './reducers'
 import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux'
@@ -23,7 +24,7 @@ const store = createStore(
     ...reducers,
     router: routerReducer,
   }),
-  applyMiddleware(middleware, logger),
+  applyMiddleware(middleware, logger, thunk),
 )
 
 const handleAuthentication = (nextState, replace) => {

@@ -1,14 +1,20 @@
+import { START_SAVE, DONE_SAVE, PROCESS_ERROR } from '../actions'
+
 const initialState = {
   user: {
     name: 'cristian',
   },
+  timeSheets: [],
+  error: {},
 }
 
-const userReducer = (state = initialState, action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'INCREMENT':
+    case START_SAVE:
       return { ...state }
-    case 'DECREMENT':
+    case DONE_SAVE:
+      return { ...state }
+    case PROCESS_ERROR:
       return { ...state }
     default:
       return state
@@ -16,5 +22,5 @@ const userReducer = (state = initialState, action) => {
 }
 
 export default {
-  user: userReducer,
+  data: reducer,
 }

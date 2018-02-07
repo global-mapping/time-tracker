@@ -19,7 +19,9 @@ class App extends Component {
     return (
       <div className="App">
         <div>Global Mapping Time Tracker</div>
-        <div className='button -green center' onClick={this.login}>Iniciar Sesión</div>
+        <div className="button -green center" onClick={this.login}>
+          Iniciar Sesión
+        </div>
       </div>
     )
   }
