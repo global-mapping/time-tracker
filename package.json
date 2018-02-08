@@ -26,7 +26,8 @@
     "eject": "react-scripts eject",
     "prettier":
       "prettier --no-semi --single-quote --print-width 100 --trailing-comma all --write '{src,__{tests,mocks}__}/**/*.js'",
-    "precommit": "pretty-quick --staged"
+    "precommit":
+      "pretty-quick --staged --no-semi --single-quote --print-width 100 --trailing-comma"
   },
   "devDependencies": {
     "husky": "^0.14.3",

@@ -20,6 +20,8 @@ class TimeTracker extends Component {
     await saveTimeSheets(timeSheets);
   };
 
+  getDateKey = date => `${date.year()}-${date.month() + 1}-${date.date()}`;
+
   render() {
     const today = moment();
     const start = moment()
@@ -47,7 +49,7 @@ class TimeTracker extends Component {
               <Day
                 key={`day_week1_${k}`}
                 title={curr.format("dddd, D MMM YYYY")}
-                dateKey={`${curr.date()}_${curr.month()}_${curr.year()}`}
+                dateKey={this.getDateKey(curr)}
               />
             );
           })}
@@ -59,7 +61,7 @@ class TimeTracker extends Component {
               <Day
                 key={`day_week2_${k}`}
                 title={curr.format("dddd, D MMM YYYY")}
-                dateKey={`${curr.date()}_${curr.month()}_${curr.year()}`}
+                dateKey={this.getDateKey(curr)}
                 isToday={today.isSame(curr, "day")}
               />
             );
@@ -72,7 +74,7 @@ class TimeTracker extends Component {
               <Day
                 key={`day_week3_${k}`}
                 title={curr.format("dddd, D MMM YYYY")}
-                dateKey={`${curr.date()}_${curr.month()}_${curr.year()}`}
+                dateKey={this.getDateKey(curr)}
               />
             );
           })}
