@@ -1,26 +1,37 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { changeMessage } from "../actions";
 
 class Day extends Component {
-  state = {
-    message: '',
-  }
-
   handleChangeMessage = e => {
-    e.preventDefault()
-    this.setState({ message: e.value })
-  }
+    e.preventDefault();
+    const { changeMessage, dateKey } = this.props;
+    changeMessage(e.target.value, dateKey);
+  };
 
   render() {
-    const { date, isToday } = this.props
-    const { message } = this.state
+    const { title, dateKey, isToday, timeSheets } = this.props;
+    const message = timeSheets[dateKey] || "";
 
     return (
-      <div className={`day ${isToday ? 'today' : ''}`}>
-        <div className="flex-row flex-center">{date}</div>
-        <textarea className="message" value={message} onChange={this.handleChangeMessage} />
+      <div className={`day ${isToday ? "today" : ""}`}>
+        <div className="flex-row flex-center">{title}</div>
+        <textarea
+          className="message"
+          value={message}
+          onChange={this.handleChangeMessage}
+        />
       </div>
-    )
+    );
   }
 }
 
-export default Day
+const mapStateToProps = ({ data }) => ({
+  timeSheets: data.timeSheets
+});
+
+const mapDispatchToProps = dispatch => ({
+  changeMessage: (message, key) => dispatch(changeMessage(message, key))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Day);
