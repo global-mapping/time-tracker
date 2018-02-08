@@ -1,36 +1,31 @@
-import {
-  START_SAVE,
-  DONE_SAVE,
-  PROCESS_ERROR,
-  CHANGE_MESSAGE
-} from "../actions";
+import { START_SAVE, DONE_SAVE, PROCESS_ERROR, CHANGE_MESSAGE } from '../actions'
 
 const initialState = {
   user: {
-    name: "cristian"
+    name: 'cristian',
   },
   timeSheets: {},
-  error: {}
-};
+  error: {},
+}
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case START_SAVE:
-      return { ...state };
+      return { ...state }
     case DONE_SAVE:
-      return { ...state };
+      return { ...state }
     case PROCESS_ERROR:
-      return { ...state };
+      return { ...state }
     case CHANGE_MESSAGE:
-      const { message, key } = action.payload;
-      const timeSheets = Object.assign({}, state.timeSheets);
-      timeSheets[key] = message;
-      return { ...state, timeSheets };
+      const { message, key } = action.payload
+      const timeSheets = Object.assign({}, state.timeSheets)
+      timeSheets[key] = message
+      return { ...state, timeSheets }
     default:
-      return state;
+      return state
   }
-};
+}
 
 export default {
-  data: reducer
-};
+  data: reducer,
+}
