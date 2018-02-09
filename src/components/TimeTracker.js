@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Day from './Day'
-import { saveTimeSheets as saveTimeSheetsAction } from '../actions'
+import {
+  saveTimeSheets as saveTimeSheetsAction,
+  listTimeSheets as listTimeSheetsAction,
+} from '../actions'
 import moment from 'moment'
 import 'moment/locale/es'
 
@@ -10,6 +13,10 @@ const numDays = new Array(7)
 numDays.fill(1)
 
 class TimeTracker extends Component {
+  componentDidMount() {
+    this.props.listTimeSheets()
+  }
+
   logout = e => {
     e.preventDefault()
     this.props.auth.logout()
@@ -90,6 +97,7 @@ const mapStateToProps = ({ data }) => ({
 
 const mapDispatchToProps = dispatch => ({
   saveTimeSheets: timesheets => dispatch(saveTimeSheetsAction(timesheets)),
+  listTimeSheets: () => dispatch(listTimeSheetsAction()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TimeTracker)
