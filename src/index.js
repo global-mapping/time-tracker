@@ -4,6 +4,7 @@ import './styles/index.css'
 import App from './components/App'
 import NoMatch from './components/NoMatch'
 import TimeTracker from './components/TimeTracker'
+import Reports from './components/Reports'
 import registerServiceWorker from './registerServiceWorker'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { Provider } from 'react-redux'
@@ -72,6 +73,7 @@ ReactDOM.render(
           }
         />
         <PrivateRoute exact path="/time-tracker" component={TimeTracker} />
+        <PrivateRoute exact path="/reportes" component={Reports} />
         <Route
           exact
           path="/callback"

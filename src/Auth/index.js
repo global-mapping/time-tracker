@@ -8,7 +8,6 @@ const {
   REACT_APP_AUDIENCE,
   REACT_APP_RESPONSE_TYPE,
   REACT_APP_SCOPE,
-  REACT_APP_ADMINS,
 } = process.env
 
 export default class Auth {
@@ -30,8 +29,8 @@ export default class Auth {
       if (authResult && authResult.accessToken && authResult.idToken && authResult.idTokenPayload) {
         this.setSession(authResult)
       } else if (err) {
-        history.replace('/')
         console.log(err)
+        history.replace('/')
       }
     })
   }
@@ -52,20 +51,8 @@ export default class Auth {
   }
 
   isAuthenticated = () => {
-    const accessToken = localStorage.getItem('access_token')
-    if (accessToken) {
-      this.auth0.client.userInfo(accessToken, (err, { email }) => {
-        if (err) {
-          console.error(err)
-          return false
-        } else {
-          const admins = REACT_APP_ADMINS.split(',')
-          this.isAdmin = admins.includes(email)
-        }
-      })
-      let expiresAt = JSON.parse(localStorage.getItem('expires_at'))
-      return new Date().getTime() < expiresAt
-    }
+    let expiresAt = JSON.parse(localStorage.getItem('expires_at'))
+    return new Date().getTime() < expiresAt
   }
 
   login = () => {

@@ -3,14 +3,13 @@ import {
   DONE_SAVE,
   START_LIST,
   DONE_LIST,
-  PROCESS_ERROR,
+  UPDATE_USER,
   CHANGE_MESSAGE,
+  PROCESS_ERROR,
 } from '../actions'
 
 const initialState = {
-  user: {
-    email: '',
-  },
+  user: {},
   timeSheets: {},
   error: {},
 }
@@ -38,6 +37,9 @@ const reducer = (state = initialState, action) => {
       const timeSheets = Object.assign({}, state.timeSheets)
       timeSheets[key] = message
       return { ...state, timeSheets }
+    }
+    case UPDATE_USER: {
+      return { ...state, user: action.user }
     }
     default:
       return state

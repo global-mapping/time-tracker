@@ -4,6 +4,7 @@ import Day from './Day'
 import {
   saveTimeSheets as saveTimeSheetsAction,
   listTimeSheets as listTimeSheetsAction,
+  updateUserInfo as updateUserInfoAction,
 } from '../actions'
 import moment from 'moment'
 import 'moment/locale/es'
@@ -13,8 +14,10 @@ const numDays = new Array(7)
 numDays.fill(1)
 
 class TimeTracker extends Component {
-  componentDidMount() {
-    this.props.listTimeSheets()
+  async componentDidMount() {
+    const { listTimeSheets, updateUserInfo, auth } = this.props
+    updateUserInfo(auth.auth0)
+    await listTimeSheets()
   }
 
   logout = e => {
@@ -27,9 +30,14 @@ class TimeTracker extends Component {
     await saveTimeSheets(timeSheets)
   }
 
+  handleReports = () => {
+    this.props.history.push('/reportes')
+  }
+
   getDateKey = date => `${date.year()}-${date.month() + 1}-${date.date()}`
 
   render() {
+    const { email, isAdmin } = this.props
     const today = moment()
     const start = moment()
       .subtract(1, 'week')
@@ -44,7 +52,12 @@ class TimeTracker extends Component {
           <div className="button -blue center" onClick={this.handleSave}>
             Guardar
           </div>
-          <span>Hola, Juan</span>
+          {isAdmin && (
+            <div className="button -sun center" onClick={this.handleReports}>
+              Reportes
+            </div>
+          )}
+          <span>{`usuario: ${email}`}</span>
           <div className="button -salmon center" onClick={this.logout}>
             Cerrar Sesión
           </div>
@@ -93,11 +106,14 @@ class TimeTracker extends Component {
 
 const mapStateToProps = ({ data }) => ({
   timeSheets: data.timeSheets,
+  email: data.user ? data.user.email : '',
+  isAdmin: data.user ? data.user.isAdmin : false,
 })
 
 const mapDispatchToProps = dispatch => ({
   saveTimeSheets: timesheets => dispatch(saveTimeSheetsAction(timesheets)),
   listTimeSheets: () => dispatch(listTimeSheetsAction()),
+  updateUserInfo: auth0 => dispatch(updateUserInfoAction(auth0)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TimeTracker)

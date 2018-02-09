@@ -6,6 +6,7 @@ export const START_LIST = 'START_LIST'
 export const DONE_LIST = 'DONE_LIST'
 export const PROCESS_ERROR = 'PROCESS_ERROR'
 export const CHANGE_MESSAGE = 'CHANGE_MESSAGE'
+export const UPDATE_USER = 'UPDATE_USER'
 
 export const startSave = () => ({
   type: START_SAVE,
@@ -22,6 +23,11 @@ export const startList = () => ({
 export const doneList = timeSheets => ({
   type: DONE_LIST,
   timeSheets,
+})
+
+export const updateUser = user => ({
+  type: UPDATE_USER,
+  user,
 })
 
 export const processError = () => ({
@@ -64,4 +70,17 @@ export const listTimeSheets = () => async dispatch => {
   } catch (err) {
     dispatch(processError())
   }
+}
+
+export const updateUserInfo = auth0 => dispatch => {
+  const accessToken = localStorage.getItem('access_token')
+  auth0.client.userInfo(accessToken, (err, user) => {
+    if (err) {
+      // handle token expired
+    } else {
+      const admins = process.env.REACT_APP_ADMINS.split(',')
+      const isAdmin = admins.includes(user.email)
+      dispatch(updateUser(Object.assign({}, user, { isAdmin })))
+    }
+  })
 }
