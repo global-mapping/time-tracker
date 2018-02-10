@@ -1,0 +1,5 @@
+{
+  "name": "global-time-tracker",
+  "alias": "global-time-tracker.now.sh",
+  "dotenv": ".env.production"
+}
