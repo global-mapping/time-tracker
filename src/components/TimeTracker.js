@@ -8,12 +8,17 @@ import {
 } from '../actions'
 import moment from 'moment'
 import 'moment/locale/es'
+import SweetAlert from 'sweetalert-react'
 
 moment.locale('es')
 const numDays = new Array(7)
 numDays.fill(1)
 
 class TimeTracker extends Component {
+  state = {
+    show: false,
+  }
+
   async componentDidMount() {
     const { listTimeSheets, updateUserInfo, auth } = this.props
     updateUserInfo(auth.auth0)
@@ -27,7 +32,10 @@ class TimeTracker extends Component {
 
   handleSave = async () => {
     const { timeSheets, saveTimeSheets } = this.props
-    await saveTimeSheets(timeSheets)
+    const success = await saveTimeSheets(timeSheets)
+    if (success) {
+      this.setState({ show: true })
+    }
   }
 
   handleReports = () => {
@@ -99,6 +107,14 @@ class TimeTracker extends Component {
             )
           })}
         </div>
+        <SweetAlert
+          show={this.state.show}
+          title="Listo"
+          text="Data Guadada con exito"
+          onConfirm={() => this.setState({ show: false })}
+          onEscapeKey={() => this.setState({ show: false })}
+          onOutsideClick={() => this.setState({ show: false })}
+        />
       </div>
     )
   }

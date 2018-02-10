@@ -48,7 +48,8 @@ export const saveTimeSheets = timeSheets => async dispatch => {
   try {
     const { success } = await save(timeSheets)
     if (success) {
-      dispatch(doneSave())
+      // dispatch(doneSave())
+      return success
     } else {
       dispatch(processError())
     }

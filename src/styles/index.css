@@ -186,3 +186,9 @@ textarea {
   color: #fe8cdf;
   background: var(--color-flower);
 }
+
+.login-title {
+  margin-bottom: 20px;
+  font-size: 30px;
+  color: var(--color-ocean);
+}
