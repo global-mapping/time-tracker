@@ -2,4 +2,4 @@ package.json
 README.ms
 yarn.lock
 .eslintrc
-styles/index.css
+src/styles/index.css
