@@ -3,3 +3,4 @@ README.ms
 yarn.lock
 .eslintrc
 src/styles/index.css
+now.json
