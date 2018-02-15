@@ -17,12 +17,15 @@ numDays.fill(1)
 class TimeTracker extends Component {
   state = {
     show: false,
+    loading: false,
   }
 
   async componentDidMount() {
     const { listTimeSheets, updateUserInfo, auth } = this.props
-    updateUserInfo(auth.auth0)
+    this.setState({ loading: true })
+    updateUserInfo(auth)
     await listTimeSheets()
+    this.setState({ loading: false })
   }
 
   logout = e => {
@@ -114,6 +117,14 @@ class TimeTracker extends Component {
           onConfirm={() => this.setState({ show: false })}
           onEscapeKey={() => this.setState({ show: false })}
           onOutsideClick={() => this.setState({ show: false })}
+        />
+        <SweetAlert
+          show={this.state.loading}
+          title="Loading"
+          text="..."
+          onConfirm={() => this.setState({ loading: false })}
+          onEscapeKey={() => this.setState({ loading: false })}
+          onOutsideClick={() => this.setState({ loading: false })}
         />
       </div>
     )

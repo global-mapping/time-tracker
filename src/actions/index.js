@@ -30,8 +30,9 @@ export const updateUser = user => ({
   user,
 })
 
-export const processError = () => ({
+export const processError = error => ({
   type: PROCESS_ERROR,
+  error,
 })
 
 export const changeMessage = (message, key) => ({
@@ -48,13 +49,12 @@ export const saveTimeSheets = timeSheets => async dispatch => {
   try {
     const { success } = await save(timeSheets)
     if (success) {
-      // dispatch(doneSave())
       return success
     } else {
       dispatch(processError())
     }
   } catch (err) {
-    dispatch(processError())
+    dispatch(processError(err))
   }
 }
 
@@ -63,21 +63,21 @@ export const listTimeSheets = () => async dispatch => {
 
   try {
     const timeSheets = await list()
-    if (timeSheets) {
+    if (timeSheets instanceof Error === false) {
       dispatch(doneList(timeSheets))
     } else {
-      dispatch(processError())
+      dispatch(processError(timeSheets))
     }
   } catch (err) {
-    dispatch(processError())
+    dispatch(processError(err))
   }
 }
 
-export const updateUserInfo = auth0 => dispatch => {
+export const updateUserInfo = auth => dispatch => {
   const accessToken = localStorage.getItem('access_token')
-  auth0.client.userInfo(accessToken, (err, user) => {
+  auth.auth0.client.userInfo(accessToken, (err, user) => {
     if (err) {
-      // handle token expired
+      auth.logout()
     } else {
       const admins = process.env.REACT_APP_ADMINS.split(',')
       const isAdmin = admins.includes(user.email)

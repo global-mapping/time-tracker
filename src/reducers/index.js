@@ -17,29 +17,31 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case START_SAVE:
-      return { ...state }
+      return { ...state, error: {} }
     case DONE_SAVE:
-      return { ...state }
+      return { ...state, error: {} }
     case START_LIST:
-      return { ...state }
+      return { ...state, error: {} }
     case DONE_LIST: {
       const { timeSheets } = action
       const timeSheetsHashMap = {}
-      timeSheets.forEach(({ dayKey, message }) => {
-        timeSheetsHashMap[dayKey] = message
-      })
-      return { ...state, timeSheets: timeSheetsHashMap }
+      if (timeSheets instanceof Error === false) {
+        timeSheets.forEach(({ dayKey, message }) => {
+          timeSheetsHashMap[dayKey] = message
+        })
+      }
+      return { ...state, timeSheets: timeSheetsHashMap, error: {} }
     }
     case PROCESS_ERROR:
-      return { ...state }
+      return { ...state, error: action.error }
     case CHANGE_MESSAGE: {
       const { message, key } = action.payload
       const timeSheets = Object.assign({}, state.timeSheets)
       timeSheets[key] = message
-      return { ...state, timeSheets }
+      return { ...state, timeSheets, error: {} }
     }
     case UPDATE_USER: {
-      return { ...state, user: action.user }
+      return { ...state, user: action.user, error: {} }
     }
     default:
       return state
