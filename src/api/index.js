@@ -32,3 +32,18 @@ export const list = async () => {
     return e
   }
 }
+
+export const reportByWeek = async () => {
+  try {
+    const token = localStorage.getItem('access_token')
+    const { data } = await axios({
+      url: `${API_URL}/reportByWeek`,
+      method: 'get',
+      headers: { token },
+    })
+    return data
+  } catch (e) {
+    console.log(e)
+    return e
+  }
+}

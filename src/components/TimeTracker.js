@@ -118,14 +118,7 @@ class TimeTracker extends Component {
           onEscapeKey={() => this.setState({ show: false })}
           onOutsideClick={() => this.setState({ show: false })}
         />
-        <SweetAlert
-          show={this.state.loading}
-          title="Loading"
-          text="..."
-          onConfirm={() => this.setState({ loading: false })}
-          onEscapeKey={() => this.setState({ loading: false })}
-          onOutsideClick={() => this.setState({ loading: false })}
-        />
+        <SweetAlert show={this.state.loading} title="Loading" text="..." />
       </div>
     )
   }

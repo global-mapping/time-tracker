@@ -6,12 +6,15 @@ import {
   UPDATE_USER,
   CHANGE_MESSAGE,
   PROCESS_ERROR,
+  START_REPORT_WEEK,
+  DONE_REPORT_WEEK,
 } from '../actions'
 
 const initialState = {
   user: {},
   timeSheets: {},
   error: {},
+  report: {},
 }
 
 const reducer = (state = initialState, action) => {
@@ -42,6 +45,13 @@ const reducer = (state = initialState, action) => {
     }
     case UPDATE_USER: {
       return { ...state, user: action.user, error: {} }
+    }
+    case START_REPORT_WEEK: {
+      return state
+    }
+    case DONE_REPORT_WEEK: {
+      const { report } = action
+      return { ...state, report }
     }
     default:
       return state

@@ -1,4 +1,4 @@
-import { save, list } from '../api'
+import { save, list, reportByWeek as reportByWeekApi } from '../api'
 
 export const START_SAVE = 'START_SAVE'
 export const DONE_SAVE = 'DONE_SAVE'
@@ -7,6 +7,8 @@ export const DONE_LIST = 'DONE_LIST'
 export const PROCESS_ERROR = 'PROCESS_ERROR'
 export const CHANGE_MESSAGE = 'CHANGE_MESSAGE'
 export const UPDATE_USER = 'UPDATE_USER'
+export const START_REPORT_WEEK = 'START_REPORT_WEEK'
+export const DONE_REPORT_WEEK = 'DONE_REPORT_WEEK'
 
 export const startSave = () => ({
   type: START_SAVE,
@@ -23,6 +25,15 @@ export const startList = () => ({
 export const doneList = timeSheets => ({
   type: DONE_LIST,
   timeSheets,
+})
+
+export const startReportByWeek = () => ({
+  type: START_REPORT_WEEK,
+})
+
+export const doneReportByWeek = report => ({
+  type: DONE_REPORT_WEEK,
+  report,
 })
 
 export const updateUser = user => ({
@@ -49,6 +60,7 @@ export const saveTimeSheets = timeSheets => async dispatch => {
   try {
     const { success } = await save(timeSheets)
     if (success) {
+      console.log('done saveTimeSheets')
       return success
     } else {
       dispatch(processError())
@@ -67,6 +79,21 @@ export const listTimeSheets = () => async dispatch => {
       dispatch(doneList(timeSheets))
     } else {
       dispatch(processError(timeSheets))
+    }
+  } catch (err) {
+    dispatch(processError(err))
+  }
+}
+
+export const reportByWeek = () => async dispatch => {
+  dispatch(startReportByWeek())
+
+  try {
+    const report = await reportByWeekApi()
+    if (report instanceof Error === false) {
+      dispatch(doneReportByWeek(report))
+    } else {
+      dispatch(processError(report))
     }
   } catch (err) {
     dispatch(processError(err))
