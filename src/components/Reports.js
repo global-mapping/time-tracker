@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { reportByWeek as reportByWeekAction } from '../actions'
+import UserWeekReport from './UserWeekReport'
 
 class Reports extends Component {
   async componentDidMount() {
@@ -11,7 +12,11 @@ class Reports extends Component {
   render() {
     const { report } = this.props
 
-    return <div className="flex-column flex-center">Reportes</div>
+    return (
+      <div className="flex-column flex-center">
+        {Object.keys(report).map(r => <UserWeekReport key={r} data={report[r]} email={r} />)}
+      </div>
+    )
   }
 }
 
