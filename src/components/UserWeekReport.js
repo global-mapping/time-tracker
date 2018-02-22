@@ -1,25 +1,36 @@
-import React from 'react'
-import moment from 'moment'
+import React, { Component } from 'react'
 
-const UserWeekReport = ({ data, email }) => {
-  const username = email.slice(0, email.indexOf('@'))
-  if (username === 'cpenarrieta') return null
+class UserWeekReport extends Component {
+  arrayToHash = data => {
+    let obj = {}
+    data.forEach(d => {
+      obj[d.dayKey] = d
+    })
+    return obj
+  }
 
-  return (
-    <div className="flex-row week">
-      <div className="day-report username">{username}</div>
-      {data.map(d => {
-        const date = moment(d.dayKey, 'YYYY-MM-DD')
-        const dateFormat = date.format('dddd, D MMM YYYY')
-        return (
-          <div key={d._id} className="day-report">
-            <div className="flex-row flex-center">{dateFormat}</div>
-            <div className="message">{d.message}</div>
-          </div>
-        )
-      })}
-    </div>
-  )
+  render() {
+    const { data, email, datesArray } = this.props
+    const username = email.slice(0, email.indexOf('@'))
+    if (username === 'cpenarrieta') return null
+    const timeSheetHash = this.arrayToHash(data)
+
+    return (
+      <div className="flex-row week">
+        <div className="day-report username">{username}</div>
+        {datesArray.map(({ dateLong, dateKey }, k) => {
+          return (
+            <div key={`${username}_day_week_${k}`} className="day-report">
+              <div className="flex-row flex-center date-report">{dateLong}</div>
+              <div className="message">
+                {(timeSheetHash[dateKey] && timeSheetHash[dateKey].message) || ''}
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    )
+  }
 }
 
 export default UserWeekReport

@@ -54,8 +54,8 @@ class TimeTracker extends Component {
       .subtract(1, 'week')
       .startOf('isoWeek')
       .subtract(1, 'day')
+    let curr = moment(start)
 
-    let curr = start
     return (
       <div className="flex-column flex-center">
         <div className="header flex-center">

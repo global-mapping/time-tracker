@@ -105,6 +105,33 @@ textarea {
 .username {
   width: 8%;
   text-align: center;
+  font-weight: bold;
+}
+
+.date-report {
+  text-decoration: underline;
+}
+
+.back-next {
+  height: 40px;
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.back-next a {
+  color: var(--color-ocean);
+  text-decoration: var(--color-ocean);
+  cursor: pointer;
+}
+
+.start {
+  color: var(--color-ocean);
+}
+
+.end {
+  color: var(--color-alge);
 }
 
 .button {
