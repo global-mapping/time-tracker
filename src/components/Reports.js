@@ -56,7 +56,7 @@ class Reports extends Component {
     return (
       <div className="flex-column flex-center">
         <div className="back-next">
-          <a onClick={this.handleBack}>{'<- back'}</a>
+          <a onClick={this.handleBack}>{'<- semana anterior'}</a>
           <span>
             Semana del{' '}
             <span className="start">
@@ -71,7 +71,7 @@ class Reports extends Component {
                 .format('dddd D MMM YYYY')}
             </span>
           </span>
-          <a onClick={this.handleNext}>{'next ->'}</a>
+          <a onClick={this.handleNext}>{'semana siguiente ->'}</a>
         </div>
         {Object.keys(report).map(r => (
           <UserWeekReport key={r} data={report[r]} email={r} datesArray={datesArray} />
