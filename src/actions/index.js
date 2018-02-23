@@ -85,11 +85,11 @@ export const listTimeSheets = () => async dispatch => {
   }
 }
 
-export const reportByWeek = () => async dispatch => {
+export const reportByWeek = start => async dispatch => {
   dispatch(startReportByWeek())
 
   try {
-    const report = await reportByWeekApi()
+    const report = await reportByWeekApi(start)
     if (report instanceof Error === false) {
       dispatch(doneReportByWeek(report))
     } else {

@@ -13,6 +13,8 @@ class Reports extends Component {
     start: null,
   }
 
+  getDateKey = date => `${date.year()}-${date.month() + 1}-${date.date()}`
+
   componentWillMount = () => {
     const start = moment()
       .startOf('isoWeek')
@@ -22,22 +24,25 @@ class Reports extends Component {
 
   async componentDidMount() {
     const { reportByWeek } = this.props
-    await reportByWeek()
+    const { start } = this.state
+    await reportByWeek(this.getDateKey(start))
   }
 
-  getDateKey = date => `${date.year()}-${date.month() + 1}-${date.date()}`
-
-  handleBack = e => {
+  handleBack = async e => {
     e.preventDefault()
+    const { reportByWeek } = this.props
     const { start } = this.state
     const startBack = moment(start).subtract(1, 'week')
+    await reportByWeek(this.getDateKey(startBack))
     this.setState({ start: startBack })
   }
 
-  handleNext = e => {
+  handleNext = async e => {
     e.preventDefault()
+    const { reportByWeek } = this.props
     const { start } = this.state
     const startNext = moment(start).add(1, 'week')
+    await reportByWeek(this.getDateKey(startNext))
     this.setState({ start: startNext })
   }
 
@@ -86,7 +91,7 @@ const mapStateToProps = ({ data }) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  reportByWeek: () => dispatch(reportByWeekAction()),
+  reportByWeek: start => dispatch(reportByWeekAction(start)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Reports)
