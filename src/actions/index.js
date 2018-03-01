@@ -102,13 +102,14 @@ export const reportByWeek = start => async dispatch => {
 
 export const updateUserInfo = auth => dispatch => {
   const accessToken = localStorage.getItem('access_token')
+  const userId = localStorage.getItem('userId')
   auth.auth0.client.userInfo(accessToken, (err, user) => {
     if (err) {
       auth.logout()
     } else {
       const admins = process.env.REACT_APP_ADMINS.split(',')
       const isAdmin = admins.includes(user.email)
-      dispatch(updateUser(Object.assign({}, user, { isAdmin })))
+      dispatch(updateUser(Object.assign({}, user, { isAdmin, userId })))
     }
   })
 }

@@ -47,3 +47,18 @@ export const reportByWeek = async startDate => {
     return e
   }
 }
+
+export const updateCreateUser = async () => {
+  try {
+    const token = localStorage.getItem('access_token')
+    const { data } = await axios({
+      url: `${API_URL}/updateCreateUser`,
+      method: 'post',
+      headers: { token },
+    })
+    return data
+  } catch (e) {
+    console.log(e)
+    return e
+  }
+}

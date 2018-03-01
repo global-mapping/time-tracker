@@ -1,5 +1,6 @@
 import auth0 from 'auth0-js'
 import history from '../history/'
+import { updateCreateUser } from '../api'
 
 const {
   REACT_APP_DOMAIN,
@@ -25,9 +26,12 @@ export default class Auth {
   })
 
   handleAuthentication = () => {
-    this.auth0.parseHash((err, authResult) => {
+    this.auth0.parseHash(async (err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken && authResult.idTokenPayload) {
         this.setSession(authResult)
+        const userId = await updateCreateUser()
+        localStorage.setItem('userId', userId.id)
+        history.replace('/time-tracker')
       } else if (err) {
         console.log(err)
         history.replace('/')
@@ -40,13 +44,13 @@ export default class Auth {
     localStorage.setItem('access_token', authResult.accessToken)
     localStorage.setItem('id_token', authResult.idToken)
     localStorage.setItem('expires_at', expiresAt)
-    history.replace('/time-tracker')
   }
 
   logout = () => {
     localStorage.removeItem('access_token')
     localStorage.removeItem('id_token')
     localStorage.removeItem('expires_at')
+    localStorage.removeItem('userId')
     history.replace('/')
   }
 

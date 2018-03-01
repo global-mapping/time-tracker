@@ -28,7 +28,7 @@ const store = createStore(
   applyMiddleware(middleware, logger, thunk),
 )
 
-const handleAuthentication = (nextState, replace) => {
+const handleAuthentication = async (nextState, replace) => {
   if (/access_token|id_token|error/.test(nextState.location.hash)) {
     auth.handleAuthentication()
   }
