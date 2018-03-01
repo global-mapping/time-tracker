@@ -54,11 +54,11 @@ export const changeMessage = (message, key) => ({
   },
 })
 
-export const saveTimeSheets = timeSheets => async dispatch => {
+export const saveTimeSheets = request => async dispatch => {
   dispatch(startSave())
 
   try {
-    const { success } = await save(timeSheets)
+    const { success } = await save(request)
     if (success) {
       console.log('done saveTimeSheets')
       return success

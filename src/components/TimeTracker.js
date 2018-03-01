@@ -34,8 +34,8 @@ class TimeTracker extends Component {
   }
 
   handleSave = async () => {
-    const { timeSheets, saveTimeSheets } = this.props
-    const success = await saveTimeSheets(timeSheets)
+    const { timeSheets, saveTimeSheets, userId } = this.props
+    const success = await saveTimeSheets({ timeSheets, userId })
     if (success) {
       this.setState({ show: true })
     }
@@ -127,6 +127,7 @@ class TimeTracker extends Component {
 const mapStateToProps = ({ data }) => ({
   timeSheets: data.timeSheets,
   email: data.user ? data.user.email : '',
+  userId: data.user ? data.user.userId : '',
   isAdmin: data.user ? data.user.isAdmin : false,
 })
 
