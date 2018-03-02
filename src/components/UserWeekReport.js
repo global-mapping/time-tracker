@@ -10,17 +10,21 @@ class UserWeekReport extends Component {
   }
 
   render() {
-    const { data, email, datesArray } = this.props
-    const username = email.slice(0, email.indexOf('@'))
-    if (username === 'cpenarrieta') return null
+    const { data, email, datesArray, name, picture, nickname } = this.props
+    if (nickname === 'cpenarrieta') return null
     const timeSheetHash = this.arrayToHash(data)
 
     return (
       <div className="flex-row week">
-        <div className="day-report username">{username}</div>
+        <div className="day-report username">
+          <a href={`mailto:${email}`} target="_blank">
+            {name}
+          </a>
+          <img src={picture} alt={'profile pic'} />
+        </div>
         {datesArray.map(({ dateLong, dateKey }, k) => {
           return (
-            <div key={`${username}_day_week_${k}`} className="day-report">
+            <div key={`${nickname}_day_week_${k}`} className="day-report">
               <div className="flex-row flex-center date-report">{dateLong}</div>
               <div className="message">
                 {(timeSheetHash[dateKey] && timeSheetHash[dateKey].message) || ''}

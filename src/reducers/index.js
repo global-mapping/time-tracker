@@ -12,6 +12,7 @@ import {
 
 const initialState = {
   user: {},
+  usersList: {},
   timeSheets: {},
   error: {},
   report: {},
@@ -51,7 +52,7 @@ const reducer = (state = initialState, action) => {
     }
     case DONE_REPORT_WEEK: {
       const { report } = action
-      return { ...state, report }
+      return { ...state, report: report.report, usersList: report.users }
     }
     default:
       return state

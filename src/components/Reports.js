@@ -49,7 +49,7 @@ class Reports extends Component {
   render() {
     const { start } = this.state
     let curr = moment(start)
-    const { report } = this.props
+    const { report, usersList } = this.props
     const datesArray = numDays.map((i, k) => {
       curr = curr.add(1, 'day')
       return {
@@ -78,9 +78,21 @@ class Reports extends Component {
           </span>
           <a onClick={this.handleNext}>{'semana siguiente ->'}</a>
         </div>
-        {Object.keys(report).map(r => (
-          <UserWeekReport key={r} data={report[r]} email={r} datesArray={datesArray} />
-        ))}
+        {Object.keys(report).map(r => {
+          let user = usersList.filter(u => u.email === r)
+          user = user && user[0]
+          return (
+            <UserWeekReport
+              key={r}
+              data={report[r]}
+              email={r}
+              name={user && user.name}
+              picture={user && user.picture}
+              nickname={user && user.nickname}
+              datesArray={datesArray}
+            />
+          )
+        })}
       </div>
     )
   }
@@ -88,6 +100,7 @@ class Reports extends Component {
 
 const mapStateToProps = ({ data }) => ({
   report: data.report,
+  usersList: data.usersList,
 })
 
 const mapDispatchToProps = dispatch => ({
