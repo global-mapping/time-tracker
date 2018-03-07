@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { reportByWeek as reportByWeekAction } from '../actions'
+import {
+  reportByWeek as reportByWeekAction,
+  updateUserInfo as updateUserInfoAction,
+} from '../actions'
 import UserWeekReport from './UserWeekReport'
 import moment from 'moment'
 
@@ -23,8 +26,9 @@ class Reports extends Component {
   }
 
   async componentDidMount() {
-    const { reportByWeek } = this.props
+    const { reportByWeek, auth, updateUserInfo } = this.props
     const { start } = this.state
+    updateUserInfo(auth)
     await reportByWeek(this.getDateKey(start))
   }
 
@@ -48,8 +52,10 @@ class Reports extends Component {
 
   render() {
     const { start } = this.state
+    const { report, usersList, isAdmin } = this.props
+    if (!isAdmin) return null
+
     let curr = moment(start)
-    const { report, usersList } = this.props
     const datesArray = numDays.map((i, k) => {
       curr = curr.add(1, 'day')
       return {
@@ -101,10 +107,12 @@ class Reports extends Component {
 const mapStateToProps = ({ data }) => ({
   report: data.report,
   usersList: data.usersList,
+  isAdmin: data.user ? data.user.isAdmin : false,
 })
 
 const mapDispatchToProps = dispatch => ({
   reportByWeek: start => dispatch(reportByWeekAction(start)),
+  updateUserInfo: auth0 => dispatch(updateUserInfoAction(auth0)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Reports)

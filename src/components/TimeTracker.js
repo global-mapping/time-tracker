@@ -45,6 +45,10 @@ class TimeTracker extends Component {
     this.props.history.push('/reportes')
   }
 
+  handleUsuarios = () => {
+    this.props.history.push('/users')
+  }
+
   getDateKey = date => `${date.year()}-${date.month() + 1}-${date.date()}`
 
   render() {
@@ -66,6 +70,11 @@ class TimeTracker extends Component {
           {isAdmin && (
             <div className="button -sun center" onClick={this.handleReports}>
               Reportes
+            </div>
+          )}
+          {isAdmin && (
+            <div className="button -alge center" onClick={this.handleUsuarios}>
+              Usuarios
             </div>
           )}
           <span>{`usuario: ${email}`}</span>

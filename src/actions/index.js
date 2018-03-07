@@ -1,4 +1,4 @@
-import { save, list, reportByWeek as reportByWeekApi } from '../api'
+import { save, list, getUsers, reportByWeek as reportByWeekApi, updateUserProfileApi } from '../api'
 
 export const START_SAVE = 'START_SAVE'
 export const DONE_SAVE = 'DONE_SAVE'
@@ -9,6 +9,9 @@ export const CHANGE_MESSAGE = 'CHANGE_MESSAGE'
 export const UPDATE_USER = 'UPDATE_USER'
 export const START_REPORT_WEEK = 'START_REPORT_WEEK'
 export const DONE_REPORT_WEEK = 'DONE_REPORT_WEEK'
+export const DONE_LIST_USERS = 'DONE_LIST_USERS'
+export const START_UPDATE_USER_PROFILE = 'START_UPDATE_USER_PROFILE'
+export const DONE_UPDATE_USER_PROFILE = 'DONE_UPDATE_USER_PROFILE'
 
 export const startSave = () => ({
   type: START_SAVE,
@@ -22,9 +25,23 @@ export const startList = () => ({
   type: START_LIST,
 })
 
+export const startUpdateUserProfile = () => ({
+  type: START_UPDATE_USER_PROFILE,
+})
+
 export const doneList = timeSheets => ({
   type: DONE_LIST,
   timeSheets,
+})
+
+export const doneListUsers = users => ({
+  type: DONE_LIST_USERS,
+  users,
+})
+
+export const doneUpdateUserProfile = users => ({
+  type: DONE_UPDATE_USER_PROFILE,
+  users,
 })
 
 export const startReportByWeek = () => ({
@@ -70,6 +87,17 @@ export const saveTimeSheets = request => async dispatch => {
   }
 }
 
+export const updateUserProfile = user => async dispatch => {
+  dispatch(startUpdateUserProfile())
+
+  try {
+    const users = await updateUserProfileApi(user)
+    dispatch(doneUpdateUserProfile(users))
+  } catch (err) {
+    dispatch(processError(err))
+  }
+}
+
 export const listTimeSheets = () => async dispatch => {
   dispatch(startList())
 
@@ -79,6 +107,21 @@ export const listTimeSheets = () => async dispatch => {
       dispatch(doneList(timeSheets))
     } else {
       dispatch(processError(timeSheets))
+    }
+  } catch (err) {
+    dispatch(processError(err))
+  }
+}
+
+export const listUsers = () => async dispatch => {
+  dispatch(startList())
+
+  try {
+    const users = await getUsers()
+    if (users instanceof Error === false) {
+      dispatch(doneListUsers(users))
+    } else {
+      dispatch(processError(users))
     }
   } catch (err) {
     dispatch(processError(err))
@@ -100,6 +143,7 @@ export const reportByWeek = start => async dispatch => {
   }
 }
 
+// TODO this will change once all users have a area
 export const updateUserInfo = auth => dispatch => {
   const accessToken = localStorage.getItem('access_token')
   const userId = localStorage.getItem('userId')

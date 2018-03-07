@@ -8,11 +8,14 @@ import {
   PROCESS_ERROR,
   START_REPORT_WEEK,
   DONE_REPORT_WEEK,
+  DONE_LIST_USERS,
+  DONE_UPDATE_USER_PROFILE,
+  START_UPDATE_USER_PROFILE,
 } from '../actions'
 
 const initialState = {
   user: {},
-  usersList: {},
+  usersList: [],
   timeSheets: {},
   error: {},
   report: {},
@@ -25,6 +28,8 @@ const reducer = (state = initialState, action) => {
     case DONE_SAVE:
       return { ...state, error: {} }
     case START_LIST:
+      return { ...state, error: {} }
+    case START_UPDATE_USER_PROFILE:
       return { ...state, error: {} }
     case DONE_LIST: {
       const { timeSheets } = action
@@ -53,6 +58,11 @@ const reducer = (state = initialState, action) => {
     case DONE_REPORT_WEEK: {
       const { report } = action
       return { ...state, report: report.report, usersList: report.users }
+    }
+    case DONE_UPDATE_USER_PROFILE:
+    case DONE_LIST_USERS: {
+      const { users } = action
+      return { ...state, usersList: users, error: {} }
     }
     default:
       return state

@@ -115,6 +115,7 @@ textarea {
 .username img {
   width: 97%;
   max-width: 200px;
+  border-radius: 50%;
 }
 
 .username a {
@@ -147,6 +148,66 @@ textarea {
 
 .end {
   color: var(--color-alge);
+}
+
+.users-unassigned {
+  flex-wrap: wrap;
+}
+
+.user-element {
+  padding: 5px;
+  text-align: center;
+  border-color: '#E5E7E9';
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 10px;
+  margin-right: 4px;
+  margin-bottom: 4px;
+}
+
+.user-element img {
+  width: 30px;
+  border-radius: 50%;
+}
+
+.user-element:hover {
+  cursor: grab;
+}
+
+.user-element:active {
+  cursor: grabbing;
+}
+
+.areas-group {
+  min-width: 200px;
+  min-height: 300px;
+  width: 20%;
+}
+
+.areas-group-jefes {
+  min-height: 15%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.areas-group-miembros {
+  min-height: 50%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.jefes {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.miembros {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .button {
