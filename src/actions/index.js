@@ -1,4 +1,11 @@
-import { save, list, getUsers, reportByWeek as reportByWeekApi, updateUserProfileApi } from '../api'
+import {
+  save,
+  list,
+  getUsers,
+  getUser,
+  reportByWeek as reportByWeekApi,
+  updateUserProfileApi,
+} from '../api'
 
 export const START_SAVE = 'START_SAVE'
 export const DONE_SAVE = 'DONE_SAVE'
@@ -143,17 +150,14 @@ export const reportByWeek = start => async dispatch => {
   }
 }
 
-// TODO this will change once all users have a area
-export const updateUserInfo = auth => dispatch => {
-  const accessToken = localStorage.getItem('access_token')
-  const userId = localStorage.getItem('userId')
-  auth.auth0.client.userInfo(accessToken, (err, user) => {
-    if (err) {
-      auth.logout()
-    } else {
-      const admins = process.env.REACT_APP_ADMINS.split(',')
-      const isAdmin = admins.includes(user.email)
-      dispatch(updateUser(Object.assign({}, user, { isAdmin, userId })))
-    }
-  })
+export const me = () => async dispatch => {
+  dispatch(startUpdateUserProfile())
+
+  try {
+    const user = await getUser()
+    dispatch(updateUser(user))
+    return user
+  } catch (err) {
+    dispatch(processError(err))
+  }
 }

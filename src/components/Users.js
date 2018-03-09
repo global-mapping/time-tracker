@@ -68,7 +68,9 @@ class Users extends Component {
       operacionesManagers,
       operaciones,
       usersList,
+      isAllReports,
     } = this.props
+    if (!isAllReports) return null
     if (!usersList || !Object.keys(usersList).length) return null
 
     return (
@@ -317,7 +319,7 @@ class Users extends Component {
   }
 }
 
-const mapStateToProps = ({ data }) => {
+const mapStateToProps = ({ data }, ownProps) => {
   const usersList = data.usersList
 
   let usersToAssign = []
@@ -364,6 +366,7 @@ const mapStateToProps = ({ data }) => {
     administracion,
     operacionesManagers,
     operaciones,
+    isAllReports: ownProps.user.role === 'ADMIN' && ownProps.user.area === 'ALL_REPORTS',
   }
 }
 

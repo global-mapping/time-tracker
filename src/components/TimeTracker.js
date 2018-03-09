@@ -4,7 +4,7 @@ import Day from './Day'
 import {
   saveTimeSheets as saveTimeSheetsAction,
   listTimeSheets as listTimeSheetsAction,
-  updateUserInfo as updateUserInfoAction,
+  me as meAction,
 } from '../actions'
 import moment from 'moment'
 import 'moment/locale/es'
@@ -21,9 +21,9 @@ class TimeTracker extends Component {
   }
 
   async componentDidMount() {
-    const { listTimeSheets, updateUserInfo, auth } = this.props
+    const { listTimeSheets, me } = this.props
     this.setState({ loading: true })
-    updateUserInfo(auth)
+    await me()
     await listTimeSheets()
     this.setState({ loading: false })
   }
@@ -52,7 +52,7 @@ class TimeTracker extends Component {
   getDateKey = date => `${date.year()}-${date.month() + 1}-${date.date()}`
 
   render() {
-    const { email, isAdmin } = this.props
+    const { email, isAdmin, isAllReports } = this.props
     const today = moment()
     const start = moment()
       .subtract(1, 'week')
@@ -72,7 +72,7 @@ class TimeTracker extends Component {
               Reportes
             </div>
           )}
-          {isAdmin && (
+          {isAllReports && (
             <div className="button -alge center" onClick={this.handleUsuarios}>
               Usuarios
             </div>
@@ -138,12 +138,13 @@ const mapStateToProps = ({ data }) => ({
   email: data.user ? data.user.email : '',
   userId: data.user ? data.user.userId : '',
   isAdmin: data.user ? data.user.isAdmin : false,
+  isAllReports: data.user ? data.user.isAllReports : false,
 })
 
 const mapDispatchToProps = dispatch => ({
   saveTimeSheets: timesheets => dispatch(saveTimeSheetsAction(timesheets)),
   listTimeSheets: () => dispatch(listTimeSheetsAction()),
-  updateUserInfo: auth0 => dispatch(updateUserInfoAction(auth0)),
+  me: () => dispatch(meAction()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TimeTracker)

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import './styles/index.css'
 import App from './components/App'
@@ -17,6 +17,7 @@ import history from './history/'
 import logger from 'redux-logger'
 import Auth from './Auth'
 import Callback from './Auth/Callback'
+import { getUser } from './api'
 
 const auth = new Auth()
 const middleware = routerMiddleware(history)
@@ -32,6 +33,51 @@ const store = createStore(
 const handleAuthentication = async (nextState, replace) => {
   if (/access_token|id_token|error/.test(nextState.location.hash)) {
     auth.handleAuthentication()
+  }
+}
+
+const roles = {
+  ADMIN: 'ADMIN',
+  MEMBER: 'MEMBER',
+}
+
+class AdminRoute extends Component {
+  state = {
+    user: null,
+    userDispached: false,
+  }
+
+  dispatchUser = () => {
+    getUser()
+      .then(user => {
+        this.setState({ user, userDispached: true })
+      })
+      .catch(() => this.setState({ user: null, userDispached: true }))
+  }
+
+  render() {
+    const { component: Component, ...rest } = this.props
+    const { user, userDispached } = this.state
+
+    return (
+      <Route
+        {...rest}
+        render={props => {
+          if (!auth.isAuthenticated()) {
+            return <Redirect to={{ pathname: '/', state: { from: props.location } }} />
+          } else if (userDispached) {
+            if (user && user.role === roles.ADMIN) {
+              return <Component {...props} user={user} />
+            } else {
+              return <Redirect to={{ pathname: '/', state: { from: props.location } }} />
+            }
+          } else {
+            this.dispatchUser()
+          }
+          return null
+        }}
+      />
+    )
   }
 }
 
@@ -74,8 +120,8 @@ ReactDOM.render(
           }
         />
         <PrivateRoute exact path="/time-tracker" component={TimeTracker} />
-        <PrivateRoute exact path="/reportes" component={Reports} />
-        <PrivateRoute exact path="/users" component={Users} />
+        <AdminRoute exact path="/reportes" component={Reports} />
+        <AdminRoute exact path="/users" component={Users} />
         <Route
           exact
           path="/callback"

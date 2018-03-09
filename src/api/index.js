@@ -93,3 +93,18 @@ export const updateUserProfileApi = async user => {
     return e
   }
 }
+
+export const getUser = async () => {
+  try {
+    const token = localStorage.getItem('access_token')
+    const { data } = await axios({
+      url: `${API_URL}/me`,
+      method: 'get',
+      headers: { token },
+    })
+    return data
+  } catch (e) {
+    console.log(e)
+    return e
+  }
+}

@@ -50,7 +50,12 @@ const reducer = (state = initialState, action) => {
       return { ...state, timeSheets, error: {} }
     }
     case UPDATE_USER: {
-      return { ...state, user: action.user, error: {} }
+      const tmpUser = action.user
+      const user = Object.assign({}, tmpUser, {
+        isAdmin: tmpUser.role === 'ADMIN',
+        isAllReports: tmpUser.role === 'ADMIN' && tmpUser.area === 'ALL_REPORTS',
+      })
+      return { ...state, user, error: {} }
     }
     case START_REPORT_WEEK: {
       return state
