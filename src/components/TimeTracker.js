@@ -136,7 +136,7 @@ class TimeTracker extends Component {
 const mapStateToProps = ({ data }) => ({
   timeSheets: data.timeSheets,
   email: data.user ? data.user.email : '',
-  userId: data.user ? data.user.userId : '',
+  userId: data.user ? data.user._id : '',
   isAdmin: data.user ? data.user.isAdmin : false,
   isAllReports: data.user ? data.user.isAllReports : false,
 })
