@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-const areasColor = {
+const areas = {
   TOPOGRAFIA: '#AED6F1',
   GEOMATICA: '#D7BDE2',
   ADMINISTRACION: '#F5B7B1',
@@ -28,7 +28,7 @@ class UserWeekReport extends Component {
             {name}
           </a>
           <img src={picture} alt={'profile pic'} />
-          <div className="label" style={{ backgroundColor: areasColor[area] || '#EAEDED' }}>
+          <div className="label" style={{ backgroundColor: areas[area] || '#EAEDED' }}>
             {area}
           </div>
         </div>

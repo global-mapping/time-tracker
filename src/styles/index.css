@@ -96,6 +96,21 @@ textarea {
   padding: 3px;
 }
 
+.menu-label {
+  font-size: 14px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-radius: 50px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.menu-filter {
+  width: 60%;
+  display: flex;
+  justify-content: space-around;
+}
+
 .header {
   display: flex;
   justify-content: space-around;

@@ -8,9 +8,24 @@ moment.locale('es')
 const numDays = new Array(7)
 numDays.fill(1)
 
+const areas = {
+  TOPOGRAFIA: '#AED6F1',
+  GEOMATICA: '#D7BDE2',
+  ADMINISTRACION: '#F5B7B1',
+  OPERACIONES: '#F9E79F',
+  'TODAS LAS AREAS': '#A9DFBF',
+}
+
 class Reports extends Component {
   state = {
     start: null,
+    menuAreas: {
+      TOPOGRAFIA: false,
+      GEOMATICA: false,
+      ADMINISTRACION: false,
+      OPERACIONES: false,
+      'TODAS LAS AREAS': true,
+    },
   }
 
   getDateKey = date => `${date.year()}-${date.month() + 1}-${date.date()}`
@@ -46,10 +61,34 @@ class Reports extends Component {
     this.setState({ start: startNext })
   }
 
+  menuFilterClick = area => {
+    this.setState({
+      menuAreas: Object.assign(
+        {},
+        {
+          TOPOGRAFIA: false,
+          GEOMATICA: false,
+          ADMINISTRACION: false,
+          OPERACIONES: false,
+          'TODAS LAS AREAS': false,
+        },
+        { [area]: true },
+      ),
+    })
+  }
+
   render() {
-    const { start } = this.state
+    const { start, menuAreas } = this.state
     const { report, usersList, isAdmin } = this.props
     if (!isAdmin) return null
+
+    const selectedMenuArea = Object.entries(menuAreas).find(([k, v]) => v)[0]
+    const usersWithoutReport = usersList.filter(u => {
+      if (menuAreas['TODAS LAS AREAS']) {
+        return !report[u.email]
+      }
+      return u.area === selectedMenuArea && !report[u.email]
+    })
 
     let curr = moment(start)
     const datesArray = numDays.map((i, k) => {
@@ -80,22 +119,58 @@ class Reports extends Component {
           </span>
           <a onClick={this.handleNext}>{'semana siguiente ->'}</a>
         </div>
-        {Object.keys(report).map(r => {
-          let user = usersList.filter(u => u.email === r)
-          user = user && user[0]
-          return (
-            <UserWeekReport
-              key={r}
-              data={report[r]}
-              email={r}
-              name={user && user.name}
-              picture={user && user.picture}
-              nickname={user && user.nickname}
-              datesArray={datesArray}
-              area={user && (user.area !== 'ALL_REPORTS' ? user.area : '')}
-            />
-          )
-        })}
+        <div className="menu-filter">
+          {Object.keys(areas).map(a => (
+            <div
+              key={`filter-menu-${a}`}
+              className="menu-label"
+              style={{
+                backgroundColor: areas[a] || '#EAEDED',
+                opacity: menuAreas[a] ? 1 : 0.4,
+              }}
+              onClick={() => this.menuFilterClick(a)}
+            >
+              {a}
+            </div>
+          ))}
+        </div>
+        {Object.keys(report)
+          .filter(r => {
+            if (menuAreas['TODAS LAS AREAS']) {
+              return true
+            } else {
+              const user = report[r].length > 0 ? report[r][0].user : null
+              const userArea = user && user.area
+              return userArea === selectedMenuArea
+            }
+          })
+          .map(r => {
+            const user = report[r].length > 0 ? report[r][0].user : null
+            return (
+              <UserWeekReport
+                key={r}
+                data={report[r]}
+                email={r}
+                name={user && user.name}
+                picture={user && user.picture}
+                nickname={user && user.nickname}
+                datesArray={datesArray}
+                area={user && (user.area !== 'ALL_REPORTS' ? user.area : '')}
+              />
+            )
+          })}
+        {usersWithoutReport.map(user => (
+          <UserWeekReport
+            key={user.email}
+            data={[]}
+            email={user.email}
+            name={user && user.name}
+            picture={user && user.picture}
+            nickname={user && user.nickname}
+            datesArray={datesArray}
+            area={user && (user.area !== 'ALL_REPORTS' ? user.area : '')}
+          />
+        ))}
       </div>
     )
   }
