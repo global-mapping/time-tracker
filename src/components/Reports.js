@@ -92,6 +92,7 @@ class Reports extends Component {
               picture={user && user.picture}
               nickname={user && user.nickname}
               datesArray={datesArray}
+              area={user && (user.area !== 'ALL_REPORTS' ? user.area : '')}
             />
           )
         })}
