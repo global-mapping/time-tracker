@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
 
 class App extends Component {
-  goTo = route => {
-    this.props.history.replace(`/${route}`)
-  }
-
   login = async e => {
     e.preventDefault()
     this.props.auth.login()
