@@ -131,7 +131,7 @@ textarea {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  align-items: center;
+  font-size: 10px;
 }
 
 .username img {
@@ -185,6 +185,7 @@ textarea {
   border-radius: 10px;
   margin-right: 4px;
   margin-bottom: 4px;
+  font-size: 10px;
 }
 
 .user-element img {
