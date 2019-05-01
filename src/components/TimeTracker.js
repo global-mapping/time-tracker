@@ -107,18 +107,6 @@ class TimeTracker extends Component {
             )
           })}
         </div>
-        <div className="flex-row week">
-          {numDays.map((i, k) => {
-            curr = curr.add(1, 'day')
-            return (
-              <Day
-                key={`day_week3_${k}`}
-                title={curr.format('dddd, D MMM YYYY')}
-                dateKey={this.getDateKey(curr)}
-              />
-            )
-          })}
-        </div>
         <SweetAlert
           show={this.state.show}
           title="Listo"
@@ -127,7 +115,7 @@ class TimeTracker extends Component {
           onEscapeKey={() => this.setState({ show: false })}
           onOutsideClick={() => this.setState({ show: false })}
         />
-        <SweetAlert show={this.state.loading} title="Loading" text="..." />
+        <SweetAlert show={this.state.loading} title="Loading" text="Cargando data..." />
       </div>
     )
   }
