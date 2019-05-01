@@ -44,6 +44,10 @@ textarea {
   flex-direction: row;
 }
 
+.areaWrapper {
+  flex-wrap: wrap;
+}
+
 .flex-column {
   display: flex;
   flex-direction: column;
@@ -106,9 +110,10 @@ textarea {
 }
 
 .menu-filter {
-  width: 60%;
+  width: 93%;
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .header {
@@ -204,7 +209,7 @@ textarea {
 .areas-group {
   min-width: 200px;
   min-height: 300px;
-  width: 20%;
+  width: 17.5%;
 }
 
 .areas-group-jefes {

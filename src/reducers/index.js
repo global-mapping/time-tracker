@@ -53,7 +53,7 @@ const reducer = (state = initialState, action) => {
       const tmpUser = action.user
       const user = Object.assign({}, tmpUser, {
         isAdmin: tmpUser.role === 'ADMIN',
-        isAllReports: tmpUser.role === 'ADMIN' && tmpUser.area === 'ALL_REPORTS',
+        isAllReports: tmpUser.role === 'ADMIN' && tmpUser.area === 'TODAS_LAS_AREAS',
       })
       return { ...state, user, error: {} }
     }

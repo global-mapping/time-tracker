@@ -1,0 +1,86 @@
+export const areas = {
+  ADMINISTRACION: {
+    key: 'ADMINISTRACION',
+    color: '#F5B7B1',
+    title: 'Administracion',
+    selected: false,
+  },
+  MARKETING_COMERCIAL: {
+    key: 'MARKETING_COMERCIAL',
+    color: '#B9929F',
+    title: 'Marketing y Comercial',
+    selected: false,
+  },
+  TOPOGRAFIA: {
+    key: 'TOPOGRAFIA',
+    color: '#AED6F1',
+    title: 'Topografia',
+    selected: false,
+  },
+  GEOMATICA: {
+    key: 'GEOMATICA',
+    color: '#D7BDE2',
+    title: 'Geomatica',
+    selected: false,
+  },
+  OPERACIONES_AEREAS: {
+    key: 'OPERACIONES_AEREAS',
+    color: '#F9E79F',
+    title: 'Operaciones Aereas',
+    selected: false,
+  },
+  SEGURIDAD_HSEC: {
+    key: 'SEGURIDAD_HSEC',
+    color: '#657ED4',
+    title: 'Seguridad HSEC',
+    selected: false,
+  },
+  QUELLAVECO_GLOBAL: {
+    key: 'QUELLAVECO_GLOBAL',
+    color: '#ff8364',
+    title: 'Quellaveco',
+    selected: false,
+  },
+  QUELLAVECO_ADMINISTRACION: {
+    key: 'QUELLAVECO_ADMINISTRACION',
+    color: '#BFA4A4',
+    title: 'Quellaveco Administracion',
+    selected: false,
+  },
+  QUELLAVECO_1000: {
+    key: 'QUELLAVECO_1000',
+    color: '#ab93c9',
+    title: 'Quellaveco Area 1000',
+    selected: false,
+  },
+  QUELLAVECO_2000: {
+    key: 'QUELLAVECO_2000',
+    color: '#d698b9',
+    title: 'Quellaveco Area 2000',
+    selected: false,
+  },
+  QUELLAVECO_3000: {
+    key: 'QUELLAVECO_3000',
+    color: '#eda1ab',
+    title: 'Quellaveco Area 3000',
+    selected: false,
+  },
+  QUELLAVECO_4000: {
+    key: 'QUELLAVECO_4000',
+    color: '#ffbea3',
+    title: 'Quellaveco Area 4000',
+    selected: false,
+  },
+  QUELLAVECO_5000: {
+    key: 'QUELLAVECO_5000',
+    color: '#F4D8CD',
+    title: 'Quellaveco Area 5000',
+    selected: false,
+  },
+  TODAS_LAS_AREAS: {
+    key: 'TODAS_LAS_AREAS',
+    color: '#A9DFBF',
+    title: 'Todas las Areas',
+    selected: false,
+  },
+}

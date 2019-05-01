@@ -1,11 +1,5 @@
 import React, { Component } from 'react'
-
-const areas = {
-  TOPOGRAFIA: '#AED6F1',
-  GEOMATICA: '#D7BDE2',
-  ADMINISTRACION: '#F5B7B1',
-  OPERACIONES: '#F9E79F',
-}
+import { areas } from './constants'
 
 class UserWeekReport extends Component {
   arrayToHash = data => {
@@ -18,6 +12,7 @@ class UserWeekReport extends Component {
 
   render() {
     const { data, email, datesArray, name, picture, nickname, area } = this.props
+
     if (nickname === 'cpenarrieta') return null
     const timeSheetHash = this.arrayToHash(data)
 
@@ -28,7 +23,7 @@ class UserWeekReport extends Component {
             {name}
           </a>
           <img src={picture} alt={'profile pic'} />
-          <div className="label" style={{ backgroundColor: areas[area] || '#EAEDED' }}>
+          <div className="label" style={{ backgroundColor: areas[area].color || '#EAEDED' }}>
             {area}
           </div>
         </div>

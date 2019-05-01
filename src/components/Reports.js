@@ -2,30 +2,18 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { reportByWeek as reportByWeekAction } from '../actions'
 import UserWeekReport from './UserWeekReport'
+import { areas } from './constants'
+import { map } from 'lodash'
 import moment from 'moment'
 
 moment.locale('es')
 const numDays = new Array(7)
 numDays.fill(1)
 
-const areas = {
-  TOPOGRAFIA: '#AED6F1',
-  GEOMATICA: '#D7BDE2',
-  ADMINISTRACION: '#F5B7B1',
-  OPERACIONES: '#F9E79F',
-  'TODAS LAS AREAS': '#A9DFBF',
-}
-
 class Reports extends Component {
   state = {
     start: null,
-    menuAreas: {
-      TOPOGRAFIA: false,
-      GEOMATICA: false,
-      ADMINISTRACION: false,
-      OPERACIONES: false,
-      'TODAS LAS AREAS': true,
-    },
+    menuAreas: Object.assign({}, areas, { TODAS_LAS_AREAS: { selected: true } }),
   }
 
   getDateKey = date => `${date.year()}-${date.month() + 1}-${date.date()}`
@@ -63,17 +51,7 @@ class Reports extends Component {
 
   menuFilterClick = area => {
     this.setState({
-      menuAreas: Object.assign(
-        {},
-        {
-          TOPOGRAFIA: false,
-          GEOMATICA: false,
-          ADMINISTRACION: false,
-          OPERACIONES: false,
-          'TODAS LAS AREAS': false,
-        },
-        { [area]: true },
-      ),
+      menuAreas: Object.assign({}, areas, { [area]: { selected: true } }),
     })
   }
 
@@ -82,9 +60,9 @@ class Reports extends Component {
     const { report, usersList, isAdmin } = this.props
     if (!isAdmin) return null
 
-    const selectedMenuArea = Object.entries(menuAreas).find(([k, v]) => v)[0]
+    const selectedMenuArea = Object.entries(menuAreas).find(([k, v]) => v.selected)[0]
     const usersWithoutReport = usersList.filter(u => {
-      if (menuAreas['TODAS LAS AREAS']) {
+      if (menuAreas['TODAS_LAS_AREAS'].selected) {
         return !report[u.email]
       }
       return u.area === selectedMenuArea && !report[u.email]
@@ -120,23 +98,23 @@ class Reports extends Component {
           <a onClick={this.handleNext}>{'semana siguiente ->'}</a>
         </div>
         <div className="menu-filter">
-          {Object.keys(areas).map(a => (
+          {map(areas, a => (
             <div
-              key={`filter-menu-${a}`}
+              key={`filter-menu-${a.key}`}
               className="menu-label"
               style={{
-                backgroundColor: areas[a] || '#EAEDED',
-                opacity: menuAreas[a] ? 1 : 0.4,
+                backgroundColor: a.color || '#EAEDED',
+                opacity: menuAreas[a.key].selected ? 1 : 0.4,
               }}
-              onClick={() => this.menuFilterClick(a)}
+              onClick={() => this.menuFilterClick(a.key)}
             >
-              {a}
+              {a.key}
             </div>
           ))}
         </div>
         {Object.keys(report)
           .filter(r => {
-            if (menuAreas['TODAS LAS AREAS']) {
+            if (menuAreas['TODAS_LAS_AREAS'].selected) {
               return true
             } else {
               const user = report[r].length > 0 ? report[r][0].user : null
@@ -155,7 +133,7 @@ class Reports extends Component {
                 picture={user && user.picture}
                 nickname={user && user.nickname}
                 datesArray={datesArray}
-                area={user && (user.area !== 'ALL_REPORTS' ? user.area : '')}
+                area={user && user.area}
               />
             )
           })}
@@ -168,7 +146,7 @@ class Reports extends Component {
             picture={user && user.picture}
             nickname={user && user.nickname}
             datesArray={datesArray}
-            area={user && (user.area !== 'ALL_REPORTS' ? user.area : '')}
+            area={user && user.area}
           />
         ))}
       </div>
