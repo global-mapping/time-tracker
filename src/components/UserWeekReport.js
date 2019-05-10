@@ -23,7 +23,10 @@ class UserWeekReport extends Component {
             {name}
           </a>
           <img src={picture} alt={'profile pic'} />
-          <div className="label" style={{ backgroundColor: areas[area].color || '#EAEDED' }}>
+          <div
+            className="label"
+            style={{ backgroundColor: areas[area] ? areas[area].color || '#EAEDED' : '#EAEDED' }}
+          >
             {area}
           </div>
         </div>
