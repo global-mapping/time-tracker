@@ -90,10 +90,14 @@ textarea {
 }
 
 .day-report .label {
-  font-size: 10px;
+  font-size: 8px;
   margin-top: 5px;
   border-radius: 50px;
   padding: 3px;
+  width: 93%;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .menu-label {
@@ -127,11 +131,8 @@ textarea {
 
 .username {
   width: 8%;
-  text-align: center;
+  text-align: left;
   font-weight: bold;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
   font-size: 10px;
 }
 
@@ -139,6 +140,7 @@ textarea {
   width: 97%;
   max-width: 200px;
   border-radius: 50%;
+  margin-top: 10px;
 }
 
 .username a {
