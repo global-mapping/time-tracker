@@ -72,9 +72,7 @@ textarea {
 }
 
 .day {
-  border-color: '#E5E7E9';
-  border-width: 1px;
-  border-style: solid;
+  border: 1px solid #e5e7e9;
   margin-bottom: 5px;
   height: 300px;
   width: 14%;
@@ -83,9 +81,7 @@ textarea {
 }
 
 .day-report {
-  border-color: '#E5E7E9';
-  border-width: 1px;
-  border-style: solid;
+  border: 1px solid #e5e7e9;
   margin-bottom: 5px;
   height: 250px;
   width: 13.14%;
@@ -184,9 +180,7 @@ textarea {
 .user-element {
   padding: 5px;
   text-align: center;
-  border-color: '#E5E7E9';
-  border-width: 1px;
-  border-style: solid;
+  border: 1px solid #e5e7e9;
   border-radius: 10px;
   margin-right: 4px;
   margin-bottom: 4px;
